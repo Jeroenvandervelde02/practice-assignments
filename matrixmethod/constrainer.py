@@ -80,8 +80,8 @@ class Constrainer:
         """
         self.free_dofs = [i for i in range(len(f)) if i not in self.cons_dofs]
         
-        Kff #= k[np.ix_(YOUR CODE HERE)]
-        Ff # YOUR CODE HERE
+        Kff = k[np.ix_(self.free_dofs, self.free_dofs)]
+        Ff = f[self.free_dofs]
 
         return Kff, Ff
 
@@ -97,9 +97,10 @@ class Constrainer:
         Returns:
             numpy.ndarray: The support reactions.
         """
-        #YOUR CODE HERE
+        u_full = self.full_disp(u_free)
+        reactions = k @ u_full - f
         
-        return #YOUR CODE HERE
+        return reactions[self.cons_dofs]
 
     def __str__(self):
         """
